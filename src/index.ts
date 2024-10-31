@@ -53,4 +53,4 @@ const useVisualAudio = (
     audioContext,
   };
 };
-export default useVisualAudio;
+export {useVisualAudio};
