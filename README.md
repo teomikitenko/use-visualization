@@ -1,6 +1,6 @@
 # use-visualization
 
-> Simple visualization for your audio/video
+`Simple visualization for your audio/video`
 
 ## Installing
 
