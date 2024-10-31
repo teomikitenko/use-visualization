@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useVisualAudio = (
+const useVisualization = (
   sourceRef: HTMLVideoElement | HTMLAudioElement | null,
   canvasRef: HTMLCanvasElement | null,
   color: string = "hsl(0 72.2% 50.6%)"
@@ -53,4 +53,4 @@ const useVisualAudio = (
     audioContext,
   };
 };
-export {useVisualAudio};
+export {useVisualization};
