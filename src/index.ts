@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 
 const useVisualization = (
   sourceRef: HTMLVideoElement | HTMLAudioElement | null,
@@ -6,20 +6,17 @@ const useVisualization = (
   color: string = "hsl(0 72.2% 50.6%)"
 ) => {
   const [audioContext, setAudioContext] = useState<AudioContext | undefined>();
+
   useEffect(() => {
-    if (canvasRef && sourceRef) {
-      const audioCtx = new window.AudioContext();
-      setAudioContext(audioCtx);
-
+    if (canvasRef && sourceRef && audioContext) {
       const ctx = canvasRef.getContext("2d");
-
       let audioSource = null;
       let analyser: any = null;
 
-      audioSource = audioCtx.createMediaElementSource(sourceRef);
-      analyser = audioCtx.createAnalyser();
+      audioSource = audioContext.createMediaElementSource(sourceRef);
+      analyser = audioContext.createAnalyser();
       audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
+      analyser.connect(audioContext.destination);
       analyser.fftSize = 2048;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
@@ -48,9 +45,27 @@ const useVisualization = (
       }
       animate();
     }
-  }, [sourceRef, canvasRef]);
+  }, [sourceRef, canvasRef, audioContext]);
+  const onPlay = () => {
+    if (!audioContext) {
+        const audioCtx = new window.AudioContext();
+        setAudioContext(audioCtx);
+      }
+    if (audioContext && sourceRef) {
+      sourceRef.play();
+      audioContext.resume();
+    }
+  };
+  const onPause = () => {
+    if (audioContext && sourceRef) {
+      sourceRef.pause();
+    }
+  };
+
   return {
     audioContext,
+    onPlay,
+    onPause,
   };
 };
-export {useVisualization};
+export { useVisualization };
