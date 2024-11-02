@@ -18,7 +18,8 @@ const Audio = () => {
   const { audioContext, onPlay, onPause } = useVisualization(
     sourceRef.current,
     canvasRef.current,
-    "orange"
+    "orange",
+    8192
   );
 
   return (

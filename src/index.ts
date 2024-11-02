@@ -3,7 +3,8 @@ import { useEffect, useState} from "react";
 const useVisualization = (
   sourceRef: HTMLVideoElement | HTMLAudioElement | null,
   canvasRef: HTMLCanvasElement | null,
-  color: string = "hsl(0 72.2% 50.6%)"
+  color: string = "hsl(0 72.2% 50.6%)",
+  fftSize:number = 2048
 ) => {
   const [audioContext, setAudioContext] = useState<AudioContext | undefined>();
 
@@ -17,7 +18,7 @@ const useVisualization = (
       analyser = audioContext.createAnalyser();
       audioSource.connect(analyser);
       analyser.connect(audioContext.destination);
-      analyser.fftSize = 2048;
+      analyser.fftSize = fftSize;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
       const barWidth = canvasRef.width / bufferLength + 0.2;
